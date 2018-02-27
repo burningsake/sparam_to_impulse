@@ -14,15 +14,15 @@ import matplotlib.pyplot as plt
 sparam = rf.Network('/home/kunmok/Programming/Python/link_design/FCI_CC_Short_Link_Pair_1_to_Pair_9_Through.s4p')
 #sparam = rf.Network('/home/kunmok/Programming/Python/link_design/FCI_CC_Long_Link_Pair_15_to_Pair_7_Through.s4p')
 
-# calculate sdd21 
+# calculate sdd21 (Mixed-mode S-parameter)
 s21=sparam.s[:,1,0]
 s43=sparam.s[:,3,2]
 s23=sparam.s[:,1,2]
 s41=sparam.s[:,3,0]
-sdd21 = (s21 - s23 - s41 + s43)/2
+sdd21 = (s21 - s23 - s41 + s43)/2   # mixed-mode S-parameter
 sdd21_mag = np.abs(sdd21)
 sdd21_ang = np.angle(sdd21)
-freq=sparam.f    # freq range: 50 MHz to 15 GHz for the given channel
+freq=sparam.f                       # extract S-parameter frequency info 
 sdd21_db= 20*np.log10(sdd21_mag)
 #sparam.plot_s_db(1,0)
 #plt.plot(freq,sdd21_db)
@@ -30,7 +30,6 @@ sdd21_db= 20*np.log10(sdd21_mag)
 # find the max frequency of current s-parameter file
 flen=len(freq)
 fstep = freq[1]-freq[0]
-# how to calculate the max freq? freq[0] + fstep*(flen-1)
 ftarget=500E9   # extend max frequency to 500 GHz 
 freq_new = np.arange(freq[0],ftarget+fstep,fstep)
 
@@ -45,10 +44,10 @@ if extra_index > 1:
     for i in range(1,extra_index):
         sdd21_new[i]=(sdd21[1]/sdd21[0])**i
 
-# reverse the array
+# reverse the array (negative frequency contents)
 sdd21_new_reverse = np.conjugate(sdd21_new[::-1])
 
-# below is effectively the same as 'fftshift'
+# concatenate the negative & positive frequency 
 sdd21_new2 = np.concatenate([sdd21_new,sdd21_new_reverse])
 
 # to verify the results:
