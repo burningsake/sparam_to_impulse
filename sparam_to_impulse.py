@@ -31,7 +31,7 @@ sdd21_db= 20*np.log10(sdd21_mag)
 flen=len(freq)
 fstep = freq[1]-freq[0]
 # how to calculate the max freq? freq[0] + fstep*(flen-1)
-ftarget=1000E9   # extend max frequency to 500 GHz 
+ftarget=500E9   # extend max frequency to 500 GHz 
 freq_new = np.arange(freq[0],ftarget+fstep,fstep)
 
 # extrapolate to find DC value & approximate phase information 
@@ -47,14 +47,13 @@ if extra_index > 1:
 
 # reverse the array
 sdd21_new_reverse = np.conjugate(sdd21_new[::-1])
-#sdd21_new_reverse = sdd21_new[::-1]
 
 # below is effectively the same as 'fftshift'
 sdd21_new2 = np.concatenate([sdd21_new,sdd21_new_reverse])
 
 # to verify the results:
 pulse_resp = np.fft.ifft(sdd21_new2)
-plt.plot(np.real(pulse_resp[1:15000]))
+plt.plot(np.real(pulse_resp[750:2500]))
 fft_check= np.fft.fft(pulse_resp)
 fft_check_sdd21=fft_check[0:1496]
 #plt.plot(freq,20*np.log10(fft_check_sdd21),freq,sdd21_db)
