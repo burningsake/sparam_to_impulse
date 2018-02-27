@@ -11,8 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt 
 
 # Channel S-parameter can be downloaded from http://www.ieee802.org/3/100GCU/public/channel.html
-sparam = rf.Network('/home/kunmok/Programming/Python/link_design/FCI_CC_Short_Link_Pair_1_to_Pair_9_Through.s4p')
-#sparam = rf.Network('/home/kunmok/Programming/Python/link_design/FCI_CC_Long_Link_Pair_15_to_Pair_7_Through.s4p')
+sparam = rf.Network('./FCI_CC_Short_Link_Pair_1_to_Pair_9_Through.s4p')
+#sparam = rf.Network('./FCI_CC_Long_Link_Pair_15_to_Pair_7_Through.s4p')
 
 # calculate sdd21 (Mixed-mode S-parameter)
 s21=sparam.s[:,1,0]
