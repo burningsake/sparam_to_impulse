@@ -15,6 +15,10 @@ sparam = rf.Network('./FCI_CC_Short_Link_Pair_1_to_Pair_9_Through.s4p')
 #sparam = rf.Network('./FCI_CC_Long_Link_Pair_15_to_Pair_7_Through.s4p')
 
 # calculate sdd21 (Mixed-mode S-parameter)
+"""
+P(1) ---(CHANNEL)--- P(2)
+N(3) ---(CHANNEL)--- N(4)
+"""
 s21=sparam.s[:,1,0]
 s43=sparam.s[:,3,2]
 s23=sparam.s[:,1,2]
